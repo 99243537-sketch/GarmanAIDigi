@@ -1,0 +1,14 @@
+model,developer,date,flop,confidence,source,url
+Grok 4,xAI,2025-07,5e26,—,Epoch AI,https://epoch.ai/models/grok-4
+GPT-4.5,OpenAI,2025-02,3.8e26,较可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+Grok 3,xAI,2025-02,3.5e26,较可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+GPT-5,OpenAI,2025-08,6.6e25,推测,Epoch AI,https://epoch.ai/models/gpt-5
+Llama 4 Behemoth（预览）,Meta,2025-04,5.2e25,较可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+Gemini 1.0 Ultra,Google,2023-12,5e25,推测,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+Llama 3.1 405B,Meta,2024-07,3.8e25,可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+Claude 3.7 Sonnet,Anthropic,2025-02,3.4e25,较可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+Grok-2,xAI,2024-08,3e25,可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+Claude 3.5 Sonnet,Anthropic,2024-06,2.7e25,推测,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+豆包 Doubao-pro,字节跳动,2024-10,2.5e25,较可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+GPT-4,OpenAI,2023-03,2.1e25,较可信,Epoch AI（据 AI Pulse 整理）,https://projectaipulse.com/compute-behind-notable-models/
+GPT-3,OpenAI,2020-05,3.1e23,—,Epoch AI（据 DeepStory 整理）,https://deepstoryresearch.com/data/frontier-ai-race/training-compute/

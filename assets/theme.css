@@ -1,0 +1,91 @@
+/* AIDigi 页面主题：颜色、字号、间距等变量。浅色与深色两套，跟随系统设置。 */
+:root {
+  --font-anthropic-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-anthropic-serif: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, serif;
+
+  --cds-font-size-caption: 0.8125rem;
+  --cds-font-size-body: 0.9375rem;
+  --cds-font-size-heading: 1.0625rem;
+  --cds-font-size-title: 1.75rem;
+  --cds-font-weight-medium: 600;
+
+  --cds-gap-xs: 0.25rem;
+  --cds-gap-sm: 0.5rem;
+  --cds-gap-md: 1rem;
+  --cds-gap-lg: 1.5rem;
+  --cds-gap-xl: 2.25rem;
+  --cds-pad-xs: 0.375rem;
+  --cds-pad-sm: 0.625rem;
+  --cds-pad-md: 0.875rem;
+  --cds-pad-lg: 1.25rem;
+  --cds-radius: 8px;
+  --cds-dur-slow: 300ms;
+
+  --color-bg: #faf9f6;
+  --color-panel: #ffffff;
+  --color-fg: #1f1e1c;
+  --color-fg-muted: #6b6862;
+  --color-border-line: #e4e1da;
+  --color-bad: #c43c33;
+
+  --cds-text-secondary: #6b6862;
+  --cds-surface-popover: #ffffff;
+  --cds-border: #dcd8cf;
+  --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.12);
+
+  --cds-chart-muted: #d9d5cc;
+  --cds-chart-grid: #ece9e2;
+  --cds-chart-axis: #bdb8ad;
+  --cds-chart-reference: #8f897d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1b1a18;
+    --color-panel: #24231f;
+    --color-fg: #ecebe6;
+    --color-fg-muted: #a39f96;
+    --color-border-line: #3a3833;
+    --color-bad: #e36a61;
+
+    --cds-text-secondary: #a39f96;
+    --cds-surface-popover: #2c2a26;
+    --cds-border: #45423c;
+    --cds-shadow-popover: 0 4px 16px rgba(0, 0, 0, 0.45);
+
+    --cds-chart-muted: #4a4741;
+    --cds-chart-grid: #33312c;
+    --cds-chart-axis: #5a5750;
+    --cds-chart-reference: #8f897d;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-anthropic-sans);
+  font-size: var(--cds-font-size-body);
+  line-height: 1.5;
+}
+#dash-root { padding: clamp(16px, 4vw, 48px); }
+[hidden] { display: none !important; }
+
+.ai-brand {
+  font-family: var(--font-anthropic-sans);
+  font-size: var(--cds-font-size-caption);
+  letter-spacing: 0.08em;
+  color: var(--color-fg-muted);
+  margin: 0 0 var(--cds-gap-xs);
+}
+.ai-foot {
+  font-size: var(--cds-font-size-caption);
+  color: var(--color-fg-muted);
+  border-top: 1px solid var(--color-border-line);
+  padding-top: var(--cds-gap-md);
+  line-height: 1.7;
+}
+.ai-foot p { margin: 0 0 var(--cds-gap-xs); }
+.ai-foot a { color: inherit; }

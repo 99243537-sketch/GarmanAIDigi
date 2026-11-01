@@ -1,0 +1,9 @@
+product,company,region,metric,users_m,as_of,basis,source,url
+ChatGPT,OpenAI,美国,周活,1000,2026-08,公司公布,OpenAI（据 Implicator）,https://www.implicator.ai/google-puts-gemini-at-1-billion-monthly-users-without-naming-paying-subscribers/
+Gemini,Google,美国,月活,1000,2026-08,公司公布,Google（据 SiliconANGLE）,https://siliconangle.com/?p=812556
+Meta AI,Meta,美国,月活,1000,2025-05,公司公布,Meta 股东大会（据 Dataconomy）,https://dataconomy.com/?p=72061
+豆包,字节跳动,中国,月活,382,2026-06,第三方估算,QuestMobile（据 IT之家）,https://www.ithome.com/0/976/383.htm
+千问,阿里巴巴,中国,月活,167,2026-06,第三方估算,QuestMobile（据 IT之家）,https://www.ithome.com/0/976/383.htm
+DeepSeek,深度求索,中国,月活,130,2026-06,第三方估算,QuestMobile（据 IT之家）,https://www.ithome.com/0/976/383.htm
+Claude,Anthropic,美国,月活（App）,56,2026-05,第三方估算,Sensor Tower（据 Latent Space）,https://news.latent.space/story/clu_jpb09q
+元宝,腾讯,中国,月活,49.84,2026-06,第三方估算,QuestMobile（据凤凰网）,https://tech.ifeng.com/c/8ukVFqoxfpu

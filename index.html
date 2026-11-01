@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AIDigi · 全球 AI 行业公开数据与估算</title>
+<meta name="description" content="AIDigi 汇总主流 AI 模型与应用的用户数、融资估值、算力投入和上市公司市值，区分公司公布与第三方估算，供学习者了解 AI 行业的大致轮廓。">
+<link rel="stylesheet" href="assets/theme.css">
+<script src="vendor/d3.v7.min.js"></script>
+<script src="assets/data-loader.js"></script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+.ai-wrap{max-width:72rem;margin-inline:auto;font-family:var(--font-anthropic-sans);display:grid;gap:var(--cds-gap-xl)}
+.ai-head h1{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);margin:0 0 var(--cds-gap-xs)}
+.ai-lede{color:var(--color-fg-muted);font-size:var(--cds-font-size-body);margin:0;line-height:1.6}
+.ai-note{border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);background:var(--color-panel);line-height:1.6}
+.ai-note b{color:var(--color-fg);font-weight:600}
+.ai-sec{display:grid;gap:var(--cds-gap-md)}
+.ai-sec h2{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--cds-gap-md)}
+.ai-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);min-width:0}
+.ai-card h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-xs)}
+.ai-sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-md);line-height:1.5}
+.ai-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0 0 var(--cds-gap-sm)}
+.ai-sw{display:inline-block;width:.625rem;height:.625rem;border-radius:2px;margin-right:.375rem;vertical-align:baseline}
+.ai-chart{position:relative;min-height:300px}
+.ai-chart svg{display:block;overflow:visible}
+.ai-tip{position:absolute;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);pointer-events:none;white-space:nowrap;z-index:2;line-height:1.5}
+.ai-tip .k{color:var(--cds-text-secondary)}
+.ai-fail{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:inherit;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.ai-fail i{width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+.ai-tbl{overflow:auto;max-height:28rem}
+.ai-tbl table{width:100%;border-collapse:collapse;font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums}
+.ai-tbl th{position:sticky;top:0;background:var(--color-panel);text-align:left;font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);white-space:nowrap}
+.ai-tbl td{padding:var(--cds-pad-xs) var(--cds-pad-sm);border-bottom:1px solid var(--color-border-line);vertical-align:top}
+.ai-tbl td.num,.ai-tbl th.num{text-align:right;white-space:nowrap}
+.ai-tbl a{color:inherit;text-decoration:underline;text-decoration-color:var(--color-border-line)}
+.ai-tag{display:inline-block;padding:0 .375rem;border-radius:999px;border:1px solid var(--color-border-line);white-space:nowrap}
+.ai-read ul{margin:0;padding-left:1.1rem;line-height:1.7;font-size:var(--cds-font-size-body)}
+[data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+</style>
+
+<div class="ai-wrap">
+  <header class="ai-head">
+    <p class="ai-brand">AIDIGI</p>
+    <h1>全球 AI 行业公开数据与估算</h1>
+    <p class="ai-lede">美国头部 AI 助手的用户规模已远超其他产品，中国市场由豆包领跑；资本则高度集中在 OpenAI 与 Anthropic 两家，四大科技公司的算力投入仍在加速。本页为学习者提供行业的大致轮廓，不构成任何投资建议。</p>
+  </header>
+
+  <div class="ai-note"><b>先读口径：</b>“周活”指一周内至少用过一次的人数，“月活”是一个月内，同一产品的周活通常小于月活，两者不能直接比大小。“公司公布”来自公司财报、发布会或官方声明；“第三方估算”来自 QuestMobile、Sensor Tower 等机构的抽样推算，可能与真实值有出入。每个数字都标注了日期和出处。</div>
+
+  <section class="ai-sec" id="users">
+    <h2>用户规模</h2>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <h3>主流 AI 助手最新用户数</h3>
+        <p class="ai-sub">单位为人数；条形旁注明周活或月活。悬停可查看日期与出处。</p>
+        <div class="ai-legend"><span><i class="ai-sw" data-k="0"></i>公司公布</span><span><i class="ai-sw" data-k="1"></i>第三方估算</span></div>
+        <div class="ai-chart" data-draw="usersChart" data-source="users">—</div>
+      </div>
+      <div class="ai-card">
+        <h3>增长轨迹：ChatGPT 与 Gemini</h3>
+        <p class="ai-sub">两家公司历次公布的数字。注意 ChatGPT 是周活、Gemini 是月活，口径不同。</p>
+        <div class="ai-chart" data-draw="growthChart" data-source="growth">—</div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <h3>用户数明细与出处</h3>
+      <p class="ai-sub">Meta AI 的数字较旧，Meta 此后未再公布新数；Claude 只有第三方对移动端的估算，Anthropic 未公布消费端用户数。</p>
+      <div class="ai-tbl">
+        <table data-source="users" data-row-key="product">
+          <thead><tr>
+            <th data-field="product">产品</th><th data-field="company">公司</th><th data-field="region">地区</th>
+            <th data-field="metric">口径</th><th class="num" data-field="users_m">用户数</th><th data-field="as_of">时间</th>
+            <th data-field="basis">来源类型</th><th data-field="source">出处</th>
+          </tr></thead>
+          <tbody data-draw="usersTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-sec" id="funding">
+    <h2>融资与估值</h2>
+    <div class="ai-card">
+      <h3>头部 AI 公司最近一轮融资后估值</h3>
+      <p class="ai-sub">单位为美元。深色为本轮融资额，浅色为融资后估值；“估值”是投资人愿意出的价格，不等于公司赚了多少钱。</p>
+      <div class="ai-legend"><span><i class="ai-sw" data-k="0"></i>本轮融资额</span><span><i class="ai-sw ai-sw-muted"></i>融资后估值</span></div>
+      <div class="ai-chart" data-draw="fundChart" data-source="funding">—</div>
+    </div>
+    <div class="ai-card">
+      <h3>融资明细与出处</h3>
+      <p class="ai-sub">xAI 已于 2026 年初并入 SpaceX，此后不再单独融资；月之暗面上市前一轮融资仍在进行中。</p>
+      <div class="ai-tbl">
+        <table data-source="funding" data-row-key="company">
+          <thead><tr>
+            <th data-field="company">公司</th><th data-field="country">国家</th><th data-field="round">轮次</th>
+            <th class="num" data-field="amount_busd">本轮金额</th><th class="num" data-field="valuation_busd">融资后估值</th>
+            <th data-field="date">时间</th><th data-field="basis">来源类型</th><th data-field="source">出处</th>
+          </tr></thead>
+          <tbody data-draw="fundTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-sec" id="compute">
+    <h2>算力投入</h2>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <h3>四大科技公司季度资本开支</h3>
+        <p class="ai-sub">单位为美元，来自各公司财报。资本开支主要用于数据中心、服务器和芯片，是衡量算力投入最可靠的公开指标。微软口径含融资租赁，与其他三家不完全可比。</p>
+        <div class="ai-chart" data-draw="capexChart" data-source="capex">—</div>
+      </div>
+      <div class="ai-card">
+        <h3>知名模型的训练算力</h3>
+        <p class="ai-sub">训练一个模型用了多少次浮点运算（FLOP），对数刻度，每一格相差十倍；右侧换算为 GPT-4 的倍数。数据为 Epoch AI 的估算，各公司基本不公布。</p>
+        <div class="ai-chart" data-draw="flopChart" data-source="compute">—</div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <h3>资本开支明细与出处</h3>
+      <p class="ai-sub">“全年指引”是公司对未来开支的预期，并非已发生的金额。</p>
+      <div class="ai-tbl">
+        <table data-source="capex" data-row-key="company">
+          <thead><tr>
+            <th data-field="company">公司</th><th data-field="quarter">季度</th><th class="num" data-field="capex_busd">资本开支</th>
+            <th data-field="outlook">全年指引</th><th data-field="scope">统计口径</th><th data-field="date">财报日期</th><th data-field="source">出处</th>
+          </tr></thead>
+          <tbody data-draw="capexTable"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ai-card">
+      <h3>训练算力明细与出处</h3>
+      <p class="ai-sub">可信度为 Epoch AI 对自身估算的评级：“可信”有公开依据，“推测”主要靠间接推算。2025 年下半年以来的旗舰模型大多没有可靠估算。</p>
+      <div class="ai-tbl">
+        <table data-source="compute" data-row-key="model">
+          <thead><tr>
+            <th data-field="model">模型</th><th data-field="developer">开发者</th><th data-field="date">发布时间</th>
+            <th class="num" data-field="flop">训练算力（FLOP）</th><th data-field="confidence">可信度</th><th data-field="source">出处</th>
+          </tr></thead>
+          <tbody data-draw="flopTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-sec" id="marketcap">
+    <h2>上市公司市值</h2>
+    <div class="ai-card">
+      <h3>AI 产业链主要上市公司市值</h3>
+      <p class="ai-sub">单位为美元，为某一天的收盘或盘中快照，每天都在变化。港股公司按约 7.78 港元兑 1 美元折算。市值是二级市场价格，与上文未上市公司的融资估值性质不同。</p>
+      <div class="ai-chart" data-draw="capChart" data-source="marketcap">—</div>
+    </div>
+    <div class="ai-card">
+      <h3>市值明细与出处</h3>
+      <p class="ai-sub">员工人数暂未收录：大公司一般不单独披露 AI 团队人数，未上市公司多为第三方估算，误差较大。</p>
+      <div class="ai-tbl">
+        <table data-source="marketcap" data-row-key="company">
+          <thead><tr>
+            <th data-field="company">公司</th><th data-field="ticker">代码</th><th data-field="role">产业链位置</th>
+            <th class="num" data-field="cap_busd">市值</th><th data-field="as_of">日期</th><th data-field="source">出处</th>
+          </tr></thead>
+          <tbody data-draw="capTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-sec ai-read" id="howto">
+    <h2>怎么读这些数字</h2>
+    <div class="ai-card">
+      <ul>
+        <li>不同公司统计口径不同：有的数网页加 App，有的只数 App，有的把嵌在其他产品里的 AI 也算进去（如 Meta AI 嵌在 WhatsApp、Instagram 中）。</li>
+        <li>中国产品的数字多来自 QuestMobile，只统计中国大陆移动端；美国产品的数字多为全球口径。</li>
+        <li>用户多不等于收入高：Anthropic 消费端用户远少于 ChatGPT，但企业和开发者收入增长很快，估值反而更高。</li>
+        <li>估值是一级市场价格，会随融资轮次大幅跳动，媒体报道的“洽谈中”估值不等于最终成交价。</li>
+        <li>资本开支不全是花在 AI 上：其中也包括普通云服务、仓储物流等，但近两年的增量主要来自 AI 数据中心。</li>
+        <li>训练算力只反映“练一次模型”的投入，不等于模型好坏；同样的算力，算法更好的团队能练出更强的模型。</li>
+        <li>本页数据为人工整理，更新于 2026 年 11 月，发现有误欢迎指正。</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="ai-foot">
+    <p>AIDigi 汇总公司公开披露的数据与第三方机构的估算，供学习参考，不构成投资建议。数据为人工整理，最后更新：2026 年 11 月 2 日。</p>
+    <p>模型训练算力数据来自 <a href="https://epoch.ai/data/ai-models" target="_blank" rel="noopener">Epoch AI</a>（CC BY 4.0）；用户数、融资、财报、市值数据的出处见各表“出处”一栏。图表使用 <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a>。</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('.ai-sw[data-k]').forEach(function(s){ s.style.background = dash.colors[+s.dataset.k]; });
+  document.querySelectorAll('.ai-sw-muted').forEach(function(s){ s.style.background = 'var(--cds-chart-muted)'; });
+
+  window.aiUsers = function(v){ v = +v; return v >= 100 ? d3.format('.1f')(v/100) + ' 亿' : d3.format(',')(Math.round(v*100)) + ' 万'; };
+  window.aiUsd = function(v){ v = +v; return '$' + (v >= 10 ? d3.format(',')(v) : d3.format('.1f')(v)) + 'B'; };
+  window.aiState = function(el, d){
+    if (d.status === 'ok') return true;
+    if (d.status === 'error' || d.status === 'connect' || d.status === 'declined' || d.status === 'missing') {
+      var p = document.createElement('div'); p.className = 'ai-fail';
+      p.append(document.createElement('i'), '加载失败'); el.replaceChildren(p);
+    } else { el.replaceChildren('—'); }
+    return false;
+  };
+  window.aiTip = function(el){
+    var t = document.createElement('div'); t.className = 'ai-tip'; t.hidden = true; el.append(t);
+    return {
+      show: function(lines, x, y){
+        t.replaceChildren(); lines.forEach(function(l, i){ var d = document.createElement('div'); if (i === 0) d.className = 'k'; d.textContent = l; t.append(d); });
+        t.hidden = false;
+        var w = t.offsetWidth, W = el.clientWidth;
+        t.style.left = Math.max(0, Math.min(x + 12, W - w)) + 'px';
+        t.style.top = Math.max(0, y - t.offsetHeight - 8) + 'px';
+      },
+      hide: function(){ t.hidden = true; }
+    };
+  };
+  window.aiCap = function(v){ v = +v; return v >= 1000 ? d3.format('.2f')(v / 1000) + ' 万亿' : d3.format(',')(Math.round(v * 10)) + ' 亿'; };
+  var SUP = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};
+  window.aiPow = function(e){ return '10' + String(e).split('').map(function(c){ return SUP[c] || c; }).join(''); };
+  window.aiFlop = function(v){ v = +v; var e = Math.floor(Math.log10(v)), m = v / Math.pow(10, e); return (Math.abs(m - 1) < 1e-9 ? '' : d3.format('.2~f')(m) + '×') + aiPow(e); };
+  window.aiHBars = function(el, rows, o){
+    el.replaceChildren();
+    var W = Math.max(280, el.clientWidth), bh = 24, gap = 12, H = rows.length * (bh + gap);
+    var svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H);
+    var LW = aiMeasure(svg, rows.map(o.name), 13) + 12;
+    var labels = rows.map(o.text);
+    var VW = aiMeasure(svg, labels, 12) + 10;
+    var x = d3.scaleLinear([0, d3.max(rows, o.value)], [0, Math.max(40, W - LW - VW)]);
+    var tip = aiTip(el);
+    var g = svg.selectAll('g.row').data(rows).join('g').attr('class', 'row').attr('transform', function(r, i){ return 'translate(0,' + (i * (bh + gap)) + ')'; });
+    g.append('text').attr('y', bh / 2).attr('dominant-baseline', 'middle').style('font-size', '13px').style('fill', 'var(--color-fg)').text(o.name);
+    var bar = g.append('rect').attr('x', LW).attr('height', bh).attr('rx', 3).attr('width', function(r){ return Math.max(2, x(o.value(r))); }).style('fill', o.color || dash.colors[0]);
+    g.append('text').attr('x', function(r){ return LW + Math.max(2, x(o.value(r))) + 6; }).attr('y', bh / 2).attr('dominant-baseline', 'middle')
+      .style('font-size', '12px').style('fill', 'var(--color-fg-muted)').text(function(r, i){ return labels[i]; });
+    g.append('rect').attr('width', W).attr('height', bh + gap).attr('y', -gap / 2).style('fill', 'transparent')
+      .on('pointermove', function(ev, r){ var p = d3.pointer(ev, el); bar.style('opacity', function(b){ return b === r ? 1 : .45; }); tip.show(o.tip(r), p[0], p[1]); })
+      .on('pointerleave', function(){ bar.style('opacity', 1); tip.hide(); });
+  };
+  window.aiMeasure = function(svg, texts, size){
+    var g = svg.append('g').attr('opacity', 0);
+    var w = 0; texts.forEach(function(s){ var n = g.append('text').style('font-size', size + 'px').text(s).node(); w = Math.max(w, n.getComputedTextLength()); });
+    g.remove(); return w;
+  };
+})();
+</script>
+
+<script>
+dash.draw('usersChart', function(el){
+  var d = dash.data('users');
+  if (!aiState(el, d)) return;
+  el.replaceChildren();
+  var rows = d.data.map(function(r){ return Object.assign({}, r, {v: +r.users_m}); }).sort(function(a, b){ return b.v - a.v; });
+  var W = Math.max(280, el.clientWidth), bh = 24, gap = 12, H = rows.length * (bh + gap);
+  var svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H);
+  var LW = aiMeasure(svg, rows.map(function(r){ return r.product; }), 13) + 12;
+  var labels = rows.map(function(r){ return aiUsers(r.v) + ' · ' + r.metric; });
+  var VW = aiMeasure(svg, labels, 12) + 10;
+  var x = d3.scaleLinear([0, d3.max(rows, function(r){ return r.v; })], [0, Math.max(40, W - LW - VW)]);
+  var tip = aiTip(el);
+  var g = svg.selectAll('g.row').data(rows).join('g').attr('class', 'row').attr('transform', function(r, i){ return 'translate(0,' + (i * (bh + gap)) + ')'; });
+  g.append('text').attr('y', bh / 2).attr('dominant-baseline', 'middle').style('font-size', '13px').style('fill', 'var(--color-fg)').text(function(r){ return r.product; });
+  var bar = g.append('rect').attr('x', LW).attr('height', bh).attr('rx', 3).attr('width', function(r){ return Math.max(2, x(r.v)); })
+    .style('fill', function(r){ return r.basis === '公司公布' ? dash.colors[0] : dash.colors[1]; });
+  g.append('text').attr('x', function(r){ return LW + Math.max(2, x(r.v)) + 6; }).attr('y', bh / 2).attr('dominant-baseline', 'middle')
+    .style('font-size', '12px').style('fill', 'var(--color-fg-muted)').text(function(r, i){ return labels[i]; });
+  g.append('rect').attr('width', W).attr('height', bh + gap).attr('y', -gap / 2).style('fill', 'transparent')
+    .on('pointermove', function(ev, r){
+      var p = d3.pointer(ev, el);
+      bar.style('opacity', function(b){ return b === r ? 1 : .45; });
+      tip.show([r.product + '（' + r.company + '）', r.metric + ' ' + aiUsers(r.v), r.as_of + ' · ' + r.basis, r.source], p[0], p[1]);
+    })
+    .on('pointerleave', function(){ bar.style('opacity', 1); tip.hide(); });
+});
+
+dash.draw('growthChart', function(el){
+  var d = dash.data('growth');
+  if (!aiState(el, d)) return;
+  el.replaceChildren();
+  var pts = d.data.map(function(r){ return {s: r.series, t: new Date(r.date + '-01T00:00:00Z'), v: +r.users_m, date: r.date, src: r.source}; });
+  var series = d3.groups(pts, function(p){ return p.s; }).map(function(g){ return {name: g[0], pts: g[1].sort(function(a, b){ return a.t - b.t; })}; });
+  var W = Math.max(280, el.clientWidth), H = 300;
+  var svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H);
+  var ends = series.map(function(s){ var l = s.pts[s.pts.length - 1]; return s.name.split(' ')[0] + ' ' + aiUsers(l.v); });
+  var ymax = d3.max(pts, function(p){ return p.v; }) * 1.1;
+  var yTicks = d3.scaleLinear([0, ymax], [0, 1]).ticks(5);
+  var ML = aiMeasure(svg, yTicks.map(aiUsers), 11) + 8, MR = aiMeasure(svg, ends, 12) + 14, MT = 10, MB = 26;
+  var x = d3.scaleUtc(d3.extent(pts, function(p){ return p.t; }), [ML, W - MR]);
+  var y = d3.scaleLinear([0, ymax], [H - MB, MT]);
+  svg.append('g').selectAll('line').data(yTicks).join('line').attr('x1', ML).attr('x2', W - MR).attr('y1', y).attr('y2', y).style('stroke', 'var(--cds-chart-grid)');
+  svg.append('g').selectAll('text').data(yTicks).join('text').attr('x', ML - 6).attr('y', y).attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
+    .style('font-size', '11px').style('fill', 'var(--color-fg-muted)').text(aiUsers);
+  var xa = svg.append('g').attr('transform', 'translate(0,' + (H - MB) + ')').call(d3.axisBottom(x).ticks(Math.max(2, Math.floor((W - ML - MR) / 90))).tickFormat(d3.utcFormat('%Y-%m')).tickSizeOuter(0));
+  xa.attr('font-size', null).attr('font-family', null);
+  xa.selectAll('text').style('font-size', '11px').style('fill', 'var(--color-fg-muted)');
+  xa.selectAll('line,path').style('stroke', 'var(--cds-chart-axis)');
+  var line = d3.line().x(function(p){ return x(p.t); }).y(function(p){ return y(p.v); });
+  series.forEach(function(s, i){
+    svg.append('path').datum(s.pts).attr('d', line).style('fill', 'none').style('stroke', dash.colors[i]).style('stroke-width', 2).style('stroke-linecap', 'round').style('stroke-linejoin', 'round');
+    svg.append('g').selectAll('circle').data(s.pts).join('circle').attr('cx', function(p){ return x(p.t); }).attr('cy', function(p){ return y(p.v); }).attr('r', 3).style('fill', dash.colors[i]);
+  });
+  var ly = series.map(function(s){ return y(s.pts[s.pts.length - 1].v); });
+  if (ly.length === 2 && Math.abs(ly[0] - ly[1]) < 18) { var m = (ly[0] + ly[1]) / 2; ly = [m - 9, m + 9]; }
+  series.forEach(function(s, i){
+    svg.append('text').attr('x', W - MR + 8).attr('y', ly[i]).attr('dominant-baseline', 'middle').style('font-size', '12px').style('fill', dash.colors[i]).text(ends[i]);
+  });
+  var tip = aiTip(el);
+  var dot = svg.append('circle').attr('r', 5).style('fill', 'none').style('stroke-width', 2).attr('visibility', 'hidden');
+  svg.append('rect').attr('x', ML).attr('y', MT).attr('width', W - ML - MR).attr('height', H - MT - MB).style('fill', 'transparent')
+    .on('pointermove', function(ev){
+      var p = d3.pointer(ev, svg.node());
+      var best = d3.least(pts, function(q){ return Math.hypot(x(q.t) - p[0], y(q.v) - p[1]); });
+      var si = series.findIndex(function(s){ return s.name === best.s; });
+      dot.attr('cx', x(best.t)).attr('cy', y(best.v)).style('stroke', dash.colors[si]).attr('visibility', 'visible');
+      var r = el.getBoundingClientRect(), sv = svg.node().getBoundingClientRect(), k = sv.width / W;
+      tip.show([best.date, best.s + ' ' + aiUsers(best.v), best.src], x(best.t) * k + (sv.left - r.left), y(best.v) * k + (sv.top - r.top));
+    })
+    .on('pointerleave', function(){ dot.attr('visibility', 'hidden'); tip.hide(); });
+});
+
+dash.draw('fundChart', function(el){
+  var d = dash.data('funding');
+  if (!aiState(el, d)) return;
+  el.replaceChildren();
+  var rows = d.data.map(function(r){ return Object.assign({}, r, {a: +r.amount_busd, v: +r.valuation_busd}); }).sort(function(p, q){ return q.v - p.v; });
+  var W = Math.max(280, el.clientWidth), bh = 24, gap = 14, H = rows.length * (bh + gap);
+  var svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H);
+  var LW = aiMeasure(svg, rows.map(function(r){ return r.company; }), 13) + 12;
+  var labels = rows.map(function(r){ return '估值 ' + aiUsd(r.v) + ' · 本轮 ' + aiUsd(r.a); });
+  var VW = aiMeasure(svg, labels, 12) + 10;
+  var x = d3.scaleLinear([0, d3.max(rows, function(r){ return r.v; })], [0, Math.max(40, W - LW - VW)]);
+  var tip = aiTip(el);
+  var g = svg.selectAll('g.row').data(rows).join('g').attr('class', 'row').attr('transform', function(r, i){ return 'translate(0,' + (i * (bh + gap)) + ')'; });
+  g.append('text').attr('y', bh / 2).attr('dominant-baseline', 'middle').style('font-size', '13px').style('fill', 'var(--color-fg)').text(function(r){ return r.company; });
+  g.append('rect').attr('x', LW).attr('height', bh).attr('rx', 3).attr('width', function(r){ return Math.max(2, x(r.v)); }).style('fill', 'var(--cds-chart-muted)');
+  g.append('rect').attr('x', LW).attr('height', bh).attr('rx', 3).attr('width', function(r){ return Math.max(2, x(r.a)); }).style('fill', dash.colors[0]);
+  g.append('text').attr('x', function(r){ return LW + Math.max(2, x(r.v)) + 6; }).attr('y', bh / 2).attr('dominant-baseline', 'middle')
+    .style('font-size', '12px').style('fill', 'var(--color-fg-muted)').text(function(r, i){ return labels[i]; });
+  g.append('rect').attr('width', W).attr('height', bh + gap).attr('y', -gap / 2).style('fill', 'transparent')
+    .on('pointermove', function(ev, r){
+      var p = d3.pointer(ev, el);
+      tip.show([r.company + '（' + r.country + '）· ' + r.round, '本轮 ' + aiUsd(r.a) + '，融资后估值 ' + aiUsd(r.v), r.date + ' · ' + r.basis, r.source], p[0], p[1]);
+    })
+    .on('pointerleave', function(){ tip.hide(); });
+});
+
+function aiTable(tbody, d, cols){
+  if (d.status !== 'ok') { tbody.replaceChildren(); return; }
+  tbody.replaceChildren.apply(tbody, d.data.map(function(r){
+    var tr = document.createElement('tr');
+    cols.forEach(function(c){
+      var td = document.createElement('td');
+      if (c.num) td.className = 'num';
+      if (c.link) { var a = document.createElement('a'); a.textContent = r[c.f]; if (/^https:\/\//.test(r.url || '')) { a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; } td.append(a); }
+      else if (c.tag) { var s = document.createElement('span'); s.className = 'ai-tag'; s.textContent = r[c.f]; td.append(s); }
+      else td.textContent = c.fmt ? c.fmt(r[c.f]) : r[c.f];
+      tr.append(td);
+    });
+    return tr;
+  }));
+}
+dash.draw('usersTable', function(tb){
+  var d = dash.data('users');
+  if (d.status === 'ok') d = Object.assign({}, d, {data: d.data.slice().sort(function(a, b){ return b.users_m - a.users_m; })});
+  aiTable(tb, d, [{f:'product'},{f:'company'},{f:'region'},{f:'metric'},{f:'users_m',num:1,fmt:aiUsers},{f:'as_of'},{f:'basis',tag:1},{f:'source',link:1}]);
+});
+dash.draw('fundTable', function(tb){
+  var d = dash.data('funding');
+  if (d.status === 'ok') d = Object.assign({}, d, {data: d.data.slice().sort(function(a, b){ return b.valuation_busd - a.valuation_busd; })});
+  aiTable(tb, d, [{f:'company'},{f:'country'},{f:'round'},{f:'amount_busd',num:1,fmt:aiUsd},{f:'valuation_busd',num:1,fmt:aiUsd},{f:'date'},{f:'basis',tag:1},{f:'source',link:1}]);
+});
+
+function aiSorted(d, f){ return d.status === 'ok' ? Object.assign({}, d, {data: d.data.slice().sort(function(a, b){ return +b[f] - +a[f]; })}) : d; }
+
+dash.draw('capexChart', function(el){
+  var d = dash.data('capex');
+  if (!aiState(el, d)) return;
+  aiHBars(el, aiSorted(d, 'capex_busd').data, {
+    name: function(r){ return r.company; }, value: function(r){ return +r.capex_busd; },
+    text: function(r){ return aiUsd(r.capex_busd); },
+    tip: function(r){ return [r.company + ' · ' + r.quarter, '资本开支 ' + aiUsd(r.capex_busd) + '（' + r.scope + '）', '全年指引：' + r.outlook, r.source]; }
+  });
+});
+
+dash.draw('capChart', function(el){
+  var d = dash.data('marketcap');
+  if (!aiState(el, d)) return;
+  aiHBars(el, aiSorted(d, 'cap_busd').data, {
+    name: function(r){ return r.company; }, value: function(r){ return +r.cap_busd; },
+    text: function(r){ return '$' + aiCap(r.cap_busd); },
+    color: dash.colors[2],
+    tip: function(r){ return [r.company + '（' + r.ticker + '）· ' + r.role, '市值 ' + aiCap(r.cap_busd) + ' 美元', r.as_of, r.source]; }
+  });
+});
+
+dash.draw('flopChart', function(el){
+  var d = dash.data('compute');
+  if (!aiState(el, d)) return;
+  el.replaceChildren();
+  var BASE = 2.1e25;
+  var rows = d.data.map(function(r){ return Object.assign({}, r, {v: +r.flop}); }).sort(function(a, b){ return b.v - a.v; });
+  var base = rows.find(function(r){ return r.model === 'GPT-4'; });
+  var ref = base ? base.v : BASE;
+  var mult = function(v){ var k = v / ref; if (Math.abs(k - 1) < 1e-9) return 'GPT-4 本身'; return k >= 1 ? 'GPT-4 的 ' + d3.format(k >= 10 ? ',.0f' : '.1f')(k) + ' 倍' : 'GPT-4 的 1/' + d3.format(',.0f')(1 / k); };
+  var W = Math.max(280, el.clientWidth), bh = 22, gap = 8, MT = 4, MB = 24, H = MT + rows.length * (bh + gap) + MB;
+  var svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + W + ' ' + H);
+  var LW = aiMeasure(svg, rows.map(function(r){ return r.model; }), 12) + 12;
+  var labels = rows.map(function(r){ return mult(r.v); });
+  var VW = aiMeasure(svg, labels, 12) + 14;
+  var lo = Math.pow(10, Math.floor(Math.log10(d3.min(rows, function(r){ return r.v; })))), hi = Math.pow(10, Math.ceil(Math.log10(d3.max(rows, function(r){ return r.v; }))));
+  var x = d3.scaleLog([lo, hi], [LW, Math.max(LW + 60, W - VW)]);
+  var exps = d3.range(Math.round(Math.log10(lo)), Math.round(Math.log10(hi)) + 1);
+  var yb = H - MB;
+  svg.append('g').selectAll('line').data(exps).join('line').attr('x1', function(e){ return x(Math.pow(10, e)); }).attr('x2', function(e){ return x(Math.pow(10, e)); })
+    .attr('y1', MT).attr('y2', yb).style('stroke', 'var(--cds-chart-grid)');
+  var step = Math.max(1, Math.ceil(exps.length * 34 / Math.max(60, W - LW - VW)));
+  svg.append('g').selectAll('text').data(exps.filter(function(e, i){ return i % step === 0; })).join('text').attr('x', function(e){ return x(Math.pow(10, e)); }).attr('y', yb + 16)
+    .attr('text-anchor', 'middle').style('font-size', '11px').style('fill', 'var(--color-fg-muted)').text(aiPow);
+  svg.append('line').attr('x1', x(ref)).attr('x2', x(ref)).attr('y1', MT).attr('y2', yb).style('stroke', 'var(--cds-chart-reference)').style('stroke-dasharray', '4 3');
+  var tip = aiTip(el);
+  var g = svg.selectAll('g.row').data(rows).join('g').attr('class', 'row').attr('transform', function(r, i){ return 'translate(0,' + (MT + i * (bh + gap)) + ')'; });
+  g.append('text').attr('y', bh / 2).attr('dominant-baseline', 'middle').style('font-size', '12px').style('fill', 'var(--color-fg)').text(function(r){ return r.model; });
+  g.append('line').attr('x1', LW).attr('x2', function(r){ return x(r.v); }).attr('y1', bh / 2).attr('y2', bh / 2).style('stroke', dash.colors[0]).style('stroke-width', 2).style('stroke-linecap', 'round').style('opacity', .5);
+  var dots = g.append('circle').attr('cx', function(r){ return x(r.v); }).attr('cy', bh / 2).attr('r', 5).style('fill', dash.colors[0]);
+  g.append('text').attr('x', function(r){ return x(r.v) + 10; }).attr('y', bh / 2).attr('dominant-baseline', 'middle').style('font-size', '12px').style('fill', 'var(--color-fg-muted)').text(function(r, i){ return labels[i]; });
+  g.append('rect').attr('width', W).attr('height', bh + gap).attr('y', -gap / 2).style('fill', 'transparent')
+    .on('pointermove', function(ev, r){ var p = d3.pointer(ev, el); dots.style('opacity', function(b){ return b === r ? 1 : .4; });
+      tip.show([r.model + '（' + r.developer + '）· ' + r.date, '训练算力约 ' + aiFlop(r.v) + ' FLOP', mult(r.v) + ' · 可信度：' + r.confidence, r.source], p[0], p[1]); })
+    .on('pointerleave', function(){ dots.style('opacity', 1); tip.hide(); });
+});
+
+dash.draw('capexTable', function(tb){
+  aiTable(tb, aiSorted(dash.data('capex'), 'capex_busd'), [{f:'company'},{f:'quarter'},{f:'capex_busd',num:1,fmt:aiUsd},{f:'outlook'},{f:'scope',tag:1},{f:'date'},{f:'source',link:1}]);
+});
+dash.draw('flopTable', function(tb){
+  aiTable(tb, aiSorted(dash.data('compute'), 'flop'), [{f:'model'},{f:'developer'},{f:'date'},{f:'flop',num:1,fmt:aiFlop},{f:'confidence',tag:1},{f:'source',link:1}]);
+});
+dash.draw('capTable', function(tb){
+  aiTable(tb, aiSorted(dash.data('marketcap'), 'cap_busd'), [{f:'company'},{f:'ticker'},{f:'role'},{f:'cap_busd',num:1,fmt:function(v){ return '$' + aiCap(v); }},{f:'as_of'},{f:'source',link:1}]);
+});
+</script>
+
+</div>
+</body>
+</html>

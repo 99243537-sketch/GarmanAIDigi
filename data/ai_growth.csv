@@ -1,0 +1,15 @@
+series,date,users_m,source
+ChatGPT 周活,2023-11,100,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2024-08,200,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2024-12,300,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2025-02,400,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2025-08,700,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2025-10,800,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2026-02,900,OpenAI 历次公布（据 Startup Insight 汇总）
+ChatGPT 周活,2026-08,1000,OpenAI 历次公布（据 Startup Insight 汇总）
+Gemini 月活,2025-05,400,Google 历次公布（据 Quash 汇总）
+Gemini 月活,2025-10,650,Google 历次公布（据 NewsBytes）
+Gemini 月活,2026-02,750,Alphabet 财报（据 Quash 汇总）
+Gemini 月活,2026-05,900,Google I/O 2026（据 Quash 汇总）
+Gemini 月活,2026-07,950,Alphabet 二季度财报（据 NewsBytes）
+Gemini 月活,2026-08,1000,Google 公布（据 SiliconANGLE）
