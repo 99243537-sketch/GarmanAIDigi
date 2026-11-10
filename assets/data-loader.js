@@ -10,7 +10,9 @@
     funding: 'data/ai_funding.csv',
     capex: 'data/ai_capex.csv',
     compute: 'data/ai_compute.csv',
-    marketcap: 'data/ai_marketcap.csv'
+    marketcap: 'data/ai_marketcap.csv',
+    adoption: 'data/ai_adoption_global.csv',
+    adoptionCountry: 'data/ai_adoption_country.csv'
   };
 
   // 图表系列颜色，浅色和深色背景下都清晰可辨

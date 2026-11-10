@@ -2,10 +2,11 @@
 
 AIDigi 汇总主流 AI 模型与应用的公开数据和第三方估算，帮助学习者了解 AI 行业的大致轮廓。**不构成投资建议。**
 
-页面包含五个板块：
+页面包含六个板块：
 
 | 板块 | 内容 | 主要来源 |
 |---|---|---|
+| 全球 AI 应用普及率 | 全球与主要经济体使用生成式 AI 的人口比例，四项调查口径对照 | 微软 AI 扩散报告、OECD、Eurostat、Google / Ipsos |
 | 用户规模 | 主流 AI 助手的周活 / 月活，ChatGPT 与 Gemini 增长轨迹 | 公司公布、QuestMobile、Sensor Tower |
 | 融资与估值 | 头部 AI 公司最近一轮融资额与融资后估值 | 公司公告、媒体报道 |
 | 算力投入 | 四大科技公司季度资本开支、知名模型训练算力 | 公司财报、Epoch AI |
@@ -47,6 +48,8 @@ python3 -m http.server 8000
 | `ai_capex.csv` | 季度资本开支 | `capex_busd`：十亿美元 |
 | `ai_compute.csv` | 模型训练算力 | `flop`：科学计数法，如 `2.1e25` |
 | `ai_marketcap.csv` | 上市公司市值 | `cap_busd`：十亿美元 |
+| `ai_adoption_global.csv` | 四项普及率调查的总体数字 | `value_pct`：百分比，如 `18.8` |
+| `ai_adoption_country.csv` | 各经济体普及率（`source` 列为“微软”或“OECD”） | `value_pct`、`prev_pct`（上一期，可空）：百分比 |
 
 修改规则：
 

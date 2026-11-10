@@ -1,0 +1,5 @@
+source,scope,population,period,value_pct,method,url
+微软 AI 扩散报告,全球,15–64 岁劳动年龄人口,2026 年二季度,18.8,产品遥测估算（非问卷）,https://www.microsoft.com/en-us/research/wp-content/uploads/2026/09/Microsoft-AI-Diffusion-Report-2026-Q2.pdf
+OECD,OECD 成员经济体,个人，过去三个月用过,2025 年,37.2,官方住户调查,https://www.oecd.org/en/publications/oecd-digital-economy-and-society-outlook-2026_022ed474-en/full-report/statistical-annex_724af8f8.html
+Eurostat,欧盟,16–74 岁居民,2025 年,32.7,官方住户调查,https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20251216-3
+Google / Ipsos,21 个国家,18 岁以上受访者，过去 12 个月用过,2025 年 9–10 月,66,在线问卷（自报）,https://www.ipsos.com/en-us/google-ipsos-multi-country-ai-survey-2026
