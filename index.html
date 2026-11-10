@@ -59,6 +59,7 @@
 .ai-kpi-value.lg{font-size:3.25rem}
 .ai-kpi-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0;line-height:1.55}
 .ai-kpi-note b{color:var(--color-fg);font-weight:600}
+.ai-kpi-alt{margin-top:var(--cds-gap-sm);padding-top:var(--cds-gap-sm);border-top:1px solid var(--color-border-line)}
 .ai-up{color:var(--color-ok,#2e9e6b);font-weight:600}
 @media (max-width:760px){.ai-kpis{grid-template-columns:1fr 1fr}.ai-kpis .ai-kpi:first-child{grid-column:1 / -1}}
 
@@ -92,12 +93,13 @@
       <div class="ai-kpi">
         <p class="ai-kpi-label">中国</p>
         <div class="ai-kpi-value" data-draw="kpiCN" data-source="adoptionCountry" data-field="value_pct" data-where="economy=中国">—</div>
-        <p class="ai-kpi-note">较上季度 <span class="ai-up" data-draw="kpiCNDelta">—</span>。微软称其统计尚未覆盖部分中国本土 AI 产品，实际可能偏低。</p>
+        <p class="ai-kpi-note">较上季度 <span class="ai-up" data-draw="kpiCNDelta">—</span>（微软）。</p>
+        <p class="ai-kpi-note ai-kpi-alt">CNNIC 官方统计：普及率 <b data-draw="kpiCNNIC" data-source="adoption" data-field="value_pct" data-where="source=CNNIC">—</b>，用户超 7 亿（2026 年上半年）。两者差距来自口径：微软只算 15–64 岁人口，且尚未覆盖部分中国本土 AI 产品。</p>
       </div>
     </div>
     <div class="ai-card">
       <h3>不同调查，不同口径</h3>
-      <p class="ai-sub">四项数据的人群、时间范围和方法都不同，不能取平均，也不能互相比较大小。</p>
+      <p class="ai-sub">五项数据的人群、时间范围和方法都不同，不能取平均，也不能互相比较大小。</p>
       <div class="ai-tbl">
         <table data-source="adoption" data-row-key="source">
           <thead><tr>
@@ -256,7 +258,7 @@
         <li>估值是一级市场价格，会随融资轮次大幅跳动，媒体报道的“洽谈中”估值不等于最终成交价。</li>
         <li>资本开支不全是花在 AI 上：其中也包括普通云服务、仓储物流等，但近两年的增量主要来自 AI 数据中心。</li>
         <li>训练算力只反映“练一次模型”的投入，不等于模型好坏；同样的算力，算法更好的团队能练出更强的模型。</li>
-        <li>“普及率”没有统一标准：微软按产品遥测估算全球 15–64 岁人口，OECD 与 Eurostat 是官方住户调查，Ipsos 是受访者自报，数字高低差异主要来自口径。</li>
+        <li>“普及率”没有统一标准：微软按产品遥测估算全球 15–64 岁人口，OECD、Eurostat 和中国 CNNIC 是官方统计，Ipsos 是受访者自报，数字高低差异主要来自口径。中国的数字最能说明问题：CNNIC 统计超过 50%，微软估算只有 17.5%。</li>
         <li>各板块更新频率不同，以各表标注的日期为准，发现有误欢迎指正。</li>
       </ul>
     </div>
@@ -269,7 +271,7 @@
     </div>
     <p class="ai-byline">赵老师的<b>AI 助手们</b>撰写和发布</p>
     <p>AIDigi 汇总公司公开披露的数据、官方统计与第三方机构的估算，供学习参考，不构成投资建议。全球 AI 应用普及率板块最后核验：2026 年 11 月 10 日；其他数据以各表标注日期为准。</p>
-    <p>模型训练算力数据来自 <a href="https://epoch.ai/data/ai-models" target="_blank" rel="noopener">Epoch AI</a>（CC BY 4.0）；普及率数据来自微软、OECD、Eurostat 与 Google / Ipsos；其余出处见各表“出处”一栏。图表使用 <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a>。</p>
+    <p>模型训练算力数据来自 <a href="https://epoch.ai/data/ai-models" target="_blank" rel="noopener">Epoch AI</a>（CC BY 4.0）；普及率数据来自微软、OECD、Eurostat、CNNIC 与 Google / Ipsos；其余出处见各表“出处”一栏。图表使用 <a href="https://d3js.org" target="_blank" rel="noopener">D3.js</a>。</p>
   </footer>
 </div>
 
@@ -517,6 +519,8 @@ dash.draw('flopChart', function(el){
 
 function aiPct(v){ return d3.format('.1f')(+v) + '%'; }
 function aiRow(id, economy){ var d = dash.data(id); return d.status === 'ok' ? d.data.find(function(r){ return r.economy === economy && r.source === '微软'; }) : null; }
+dash.draw('kpiCNNIC', function(el){ var d = dash.data('adoption'); var r = d.status === 'ok' ? d.data.find(function(x){ return x.source === 'CNNIC'; }) : null;
+  el.textContent = r ? (r.qualifier ? r.qualifier + ' ' : '') + d3.format('.1~f')(+r.value_pct) + '%' : '—'; });
 [['kpiGlobal','全球'],['kpiUS','美国'],['kpiCN','中国']].forEach(function(k){
   dash.draw(k[0], function(el){ var r = aiRow('adoptionCountry', k[1]); el.textContent = r ? aiPct(r.value_pct) : '—'; });
   dash.draw(k[0] + 'Delta', function(el){ var r = aiRow('adoptionCountry', k[1]);
@@ -564,7 +568,7 @@ dash.draw('adoptionTable', function(tb){
     var a = document.createElement('a'); a.textContent = r.source; if (/^https:\/\//.test(r.url || '')) { a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; }
     var c0 = document.createElement('td'); c0.append(a); tr.append(c0);
     [r.scope, r.population].forEach(function(t){ var td = document.createElement('td'); td.textContent = t; tr.append(td); });
-    var n = document.createElement('td'); n.className = 'num'; n.textContent = d3.format('.1~f')(+r.value_pct) + '%'; tr.append(n);
+    var n = document.createElement('td'); n.className = 'num'; n.textContent = (r.qualifier ? r.qualifier + ' ' : '') + d3.format('.1~f')(+r.value_pct) + '%'; tr.append(n);
     var t1 = document.createElement('td'); t1.textContent = r.period; tr.append(t1);
     var t2 = document.createElement('td'); var s = document.createElement('span'); s.className = 'ai-tag'; s.textContent = r.method; t2.append(s); tr.append(t2);
     return tr;
