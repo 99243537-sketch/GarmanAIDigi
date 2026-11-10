@@ -23,7 +23,9 @@ assets/theme.css      配色、字号等样式变量（自动适配深色模式�
 assets/data-loader.js 读取 data/ 下的 CSV 并交给页面绘制
 data/*.csv            全部数据，UTF-8 编码
 vendor/d3.v7.min.js   图表库 D3.js 7.9.0（已内置，不依赖外部 CDN）
-部署说明.md            给网站管理员的部署与更新说明
+部署说明.md            给网站管理员的部署说明
+数据维护说明.md        每月更新数据的流程与规则
+maintenance/log.md    数据维护日志
 ```
 
 ## 本地预览
@@ -37,6 +39,8 @@ python3 -m http.server 8000
 ```
 
 ## 更新数据
+
+定期维护的节奏、数据源和核验规则见 `数据维护说明.md`。
 
 数据全部在 `data/` 目录的 CSV 文件里，用 Excel、WPS 或任意文本编辑器修改即可，**不需要改代码**。
 
