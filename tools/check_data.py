@@ -13,39 +13,39 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 
-# 每个文件：必需列、数值列、不能为空的列、链接列
+# 每个文件：列名、数值列、不能为空的列。每行都必须有 url（原始来源）或 ref_url（转引）
 SCHEMA = {
     "ai_users.csv": {
-        "cols": ["product", "company", "region", "metric", "users_m", "as_of", "basis", "source", "url"],
+        "cols": ["product", "company", "region", "metric", "users_m", "as_of", "basis", "source", "url", "ref", "ref_url"],
         "num": ["users_m"], "required": ["product", "users_m", "as_of", "source"], "url": "url",
     },
     "ai_growth.csv": {
-        "cols": ["series", "date", "users_m", "source"],
-        "num": ["users_m"], "required": ["series", "date", "users_m", "source"], "url": None,
+        "cols": ["series", "date", "users_m", "source", "url", "ref", "ref_url"],
+        "num": ["users_m"], "required": ["series", "date", "users_m", "source"], "url": "url",
     },
     "ai_funding.csv": {
-        "cols": ["company", "country", "round", "amount_busd", "valuation_busd", "date", "basis", "source", "url"],
+        "cols": ["company", "country", "round", "amount_busd", "valuation_busd", "date", "basis", "source", "url", "ref", "ref_url"],
         "num": ["amount_busd", "valuation_busd"], "required": ["company", "valuation_busd", "date", "source"], "url": "url",
     },
     "ai_capex.csv": {
-        "cols": ["company", "quarter", "capex_busd", "outlook", "date", "scope", "source", "url"],
+        "cols": ["company", "quarter", "capex_busd", "outlook", "date", "scope", "source", "url", "ref", "ref_url"],
         "num": ["capex_busd"], "required": ["company", "quarter", "capex_busd", "scope", "source"], "url": "url",
     },
     "ai_compute.csv": {
-        "cols": ["model", "developer", "date", "flop", "confidence", "source", "url"],
+        "cols": ["model", "developer", "date", "flop", "confidence", "source", "url", "ref", "ref_url"],
         "num": ["flop"], "required": ["model", "flop", "source"], "url": "url",
     },
     "ai_marketcap.csv": {
-        "cols": ["company", "ticker", "role", "cap_busd", "as_of", "source", "url"],
+        "cols": ["company", "ticker", "role", "cap_busd", "as_of", "source", "url", "ref", "ref_url"],
         "num": ["cap_busd"], "required": ["company", "cap_busd", "as_of", "source"], "url": "url",
     },
     "ai_adoption_global.csv": {
-        "cols": ["source", "scope", "population", "period", "value_pct", "qualifier", "method", "url"],
+        "cols": ["source", "scope", "population", "period", "value_pct", "qualifier", "method", "url", "ref", "ref_url"],
         "num": ["value_pct"], "required": ["source", "scope", "population", "period", "value_pct", "method"], "url": "url",
         "pct": ["value_pct"],
     },
     "ai_adoption_country.csv": {
-        "cols": ["economy", "source", "period", "value_pct", "prev_pct", "url"],
+        "cols": ["economy", "source", "period", "value_pct", "prev_pct", "url", "ref", "ref_url"],
         "num": ["value_pct", "prev_pct"], "required": ["economy", "source", "period", "value_pct"], "url": "url",
         "pct": ["value_pct", "prev_pct"],
     },
@@ -102,9 +102,13 @@ for fname, sch in SCHEMA.items():
                 err(fname, i, f"“{c}”不能为负数")
             if c in sch.get("pct", []) and x > 100:
                 err(fname, i, f"“{c}”是百分比，不能超过 100")
-        u = sch["url"]
-        if u and r[u].strip() and not re.match(r"^https://\S+$", r[u].strip()):
-            err(fname, i, f"链接必须以 https:// 开头且不含空格：{r[u]}")
+        for u in ("url", "ref_url"):
+            if r[u].strip() and not re.match(r"^https://\S+$", r[u].strip()):
+                err(fname, i, f"“{u}”链接必须以 https:// 开头且不含空格：{r[u]}")
+        if not r["url"].strip() and not r["ref_url"].strip():
+            err(fname, i, "必须提供出处链接：url（原始来源）或 ref_url（转引）至少填一个")
+        if r["ref_url"].strip() and not r["ref"].strip():
+            err(fname, i, "填了 ref_url 时，ref（转引来源名称）不能为空")
         for c in ("date", "as_of"):
             if c in r and r[c].strip() and not re.match(r"^\d{4}-\d{2}(-\d{2})?$", r[c].strip()):
                 err(fname, i, f"“{c}”格式应为 YYYY-MM 或 YYYY-MM-DD，实际为“{r[c]}”")

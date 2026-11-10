@@ -1,10 +1,10 @@
-company,ticker,role,cap_busd,as_of,source,url
-英伟达,NVDA,AI 芯片,4930,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-微软,MSFT,云计算与 AI 应用,3880,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-Alphabet,GOOGL,云计算与大模型,3440,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-亚马逊,AMZN,云计算,2600,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-台积电,TSM,芯片代工,2110,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-Meta,META,大模型与 AI 应用,1570,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-博通,AVGO,AI 芯片与网络,1560,2026-10-30,FX168,https://www.fx168news.com/article/1110647
-智谱,02513.HK,大模型,30,2026-10-20,新浪财经（约 2333 亿港元，盘中）,https://k.sina.cn/article_1651428902_626ece2601901kv02.html
-MiniMax,00100.HK,大模型,7.3,2026-10-22,潮新闻（约 567 亿港元，盘中）,https://tidenews.com.cn/news.html?id=3592914
+company,ticker,role,cap_busd,as_of,source,url,ref,ref_url
+英伟达,NVDA,AI 芯片,4930,2026-10-30,纳斯达克行情页,https://www.nasdaq.com/market-activity/stocks/nvda,FX168（当日快照）,https://www.fx168news.com/article/1110647
+微软,MSFT,云计算与 AI 应用,3880,2026-10-30,纳斯达克行情页,https://www.nasdaq.com/market-activity/stocks/msft,FX168（当日快照）,https://www.fx168news.com/article/1110647
+Alphabet,GOOGL,云计算与大模型,3440,2026-10-30,纳斯达克行情页,https://www.nasdaq.com/market-activity/stocks/googl,FX168（当日快照）,https://www.fx168news.com/article/1110647
+亚马逊,AMZN,云计算,2600,2026-10-30,纳斯达克行情页,https://www.nasdaq.com/market-activity/stocks/amzn,FX168（当日快照）,https://www.fx168news.com/article/1110647
+台积电,TSM,芯片代工,2110,2026-10-30,纽交所行情页,https://www.nyse.com/quote/XNYS:TSM,FX168（当日快照）,https://www.fx168news.com/article/1110647
+Meta,META,大模型与 AI 应用,1570,2026-10-30,纳斯达克行情页,https://www.nasdaq.com/market-activity/stocks/meta,FX168（当日快照）,https://www.fx168news.com/article/1110647
+博通,AVGO,AI 芯片与网络,1560,2026-10-30,纳斯达克行情页,https://www.nasdaq.com/market-activity/stocks/avgo,FX168（当日快照）,https://www.fx168news.com/article/1110647
+智谱,02513.HK,大模型,30,2026-10-20,港交所行情页（约 2333 亿港元）,https://www.hkex.com.hk/Market-Data/Securities-Prices/Equities/Equities-Quote?sc_lang=zh-HK&sym=2513,新浪财经（盘中快照）,https://k.sina.cn/article_1651428902_626ece2601901kv02.html
+MiniMax,00100.HK,大模型,7.3,2026-10-22,港交所行情页（约 567 亿港元）,https://www.hkex.com.hk/Market-Data/Securities-Prices/Equities/Equities-Quote?sc_lang=zh-HK&sym=100,潮新闻（盘中快照）,https://tidenews.com.cn/news.html?id=3592914

@@ -1,5 +1,5 @@
-company,quarter,capex_busd,outlook,date,scope,source,url
-Amazon,2026 年三季度,77.3,2026 全年约 2200 亿美元,2026-10-29,购置物业与设备（现金）,DataStudios（据亚马逊财报）,https://www.datastudios.org/post/amazon-q3-2026-results-aws-39-percent-growth-46-billion-220-billion-capex
-Alphabet,2026 年三季度,51.4,本次未更新全年指引,2026-10-28,购置物业与设备（现金）,DataStudios（据 Alphabet 财报）,https://www.datastudios.org/post/alphabet-q3-2026-results-google-cloud-doubles-30-7-billion-capex-51-billion
-微软,2026 年三季度（财年 2027 一季度）,45.2,下季度超 500 亿美元,2026-10-28,含融资租赁,DataStudios（据微软财报）,https://www.datastudios.org/post/microsoft-q1-fy27-results-azure-48-percent-33-2-billion-capex-45-2-billion
-Meta,2026 年三季度,34.9,2026 全年 1350–1450 亿美元,2026-10-21,购置物业与设备（现金）,Winzheng（据 Meta 财报）,https://www.winzheng.com/en/article/meta-q3-2026-capex-exceeds-operating-cash-flow
+company,quarter,capex_busd,outlook,date,scope,source,url,ref,ref_url
+Amazon,2026 年三季度,77.3,2026 全年约 2200 亿美元,2026-10-29,购置物业与设备（现金）,亚马逊三季度财报,https://s2.q4cdn.com/299287126/files/doc_earnings/2026/q3/earnings-result/AMZN-Q3-2026-Earnings-Release.pdf,,
+Alphabet,2026 年三季度,51.4,本次未更新全年指引,2026-10-28,购置物业与设备（现金）,Alphabet 三季度财报,https://s206.q4cdn.com/479360582/files/doc_financials/2026/q3/2026q3-alphabet-earnings-release.pdf,,
+微软,2026 年三季度（财年 2027 一季度）,39.4,含融资租赁为 452 亿美元；下季度超 500 亿美元,2026-10-28,购置物业与设备（现金）,微软财年 2027 一季度财报,https://www.microsoft.com/en-us/investor/earnings/fy-2027-q1/press-release-webcast,DataStudios（含融资租赁口径）,https://www.datastudios.org/post/microsoft-q1-fy27-results-azure-48-percent-33-2-billion-capex-45-2-billion
+Meta,2026 年三季度,34.9,2026 全年 1350–1450 亿美元,2026-10-21,含融资租赁本金支付（Meta 自身口径）,Meta 三季度财报,https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx,,

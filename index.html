@@ -59,6 +59,22 @@
 .ai-kpi-value.lg{font-size:3.25rem}
 .ai-kpi-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0;line-height:1.55}
 .ai-kpi-note b{color:var(--color-fg);font-weight:600}
+.ai-src{display:block}
+.ai-src a,.ai-refs a,.ai-kpi-src a{color:inherit;text-decoration:underline;text-decoration-color:var(--color-border-line);text-underline-offset:2px}
+.ai-src a:hover,.ai-refs a:hover,.ai-kpi-src a:hover{text-decoration-color:currentColor}
+.ai-src-none{color:var(--color-fg-muted)}
+.ai-src-ref{display:block;color:var(--color-fg-muted);font-size:.75rem;margin-top:2px}
+.ai-kpi-src{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:var(--cds-gap-sm) 0 0}
+.ai-more{margin-top:var(--cds-gap-md);border-top:1px solid var(--color-border-line);padding-top:var(--cds-gap-sm)}
+.ai-more summary{cursor:pointer;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);padding:var(--cds-gap-xs) 0}
+.ai-more summary:hover{color:var(--color-fg)}
+.ai-more .ai-tbl{margin-top:var(--cds-gap-sm)}
+.ai-refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--cds-gap-md) var(--cds-gap-lg)}
+.ai-refs h3{font-size:var(--cds-font-size-body);font-weight:var(--cds-font-weight-medium);margin:0 0 var(--cds-gap-xs)}
+.ai-refs ol{margin:0;padding-left:1.25rem;font-size:var(--cds-font-size-caption);line-height:1.7}
+.ai-refs li{overflow-wrap:anywhere}
+.ai-refs .dom{color:var(--color-fg-muted)}
+.ai-refs .sec{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin:var(--cds-gap-xs) 0 0}
 .ai-kpi-alt{margin-top:var(--cds-gap-sm);padding-top:var(--cds-gap-sm);border-top:1px solid var(--color-border-line)}
 .ai-up{color:var(--color-ok,#2e9e6b);font-weight:600}
 @media (max-width:760px){.ai-kpis{grid-template-columns:1fr 1fr}.ai-kpis .ai-kpi:first-child{grid-column:1 / -1}}
@@ -84,17 +100,20 @@
         <p class="ai-kpi-label">全球劳动年龄人口使用生成式 AI 的比例</p>
         <div class="ai-kpi-value lg" data-draw="kpiGlobal" data-source="adoptionCountry" data-field="value_pct" data-where="economy=全球">—</div>
         <p class="ai-kpi-note">较上季度 <span class="ai-up" data-draw="kpiGlobalDelta">—</span>，约每 5 人中有 1 人在用。微软 2026 年二季度，15–64 岁人口，基于产品遥测估算。</p>
+        <p class="ai-kpi-src">来源：<a data-draw="srcMS" target="_blank" rel="noopener">微软 AI 扩散报告 2026 Q2 ↗</a></p>
       </div>
       <div class="ai-kpi">
         <p class="ai-kpi-label">美国</p>
         <div class="ai-kpi-value" data-draw="kpiUS" data-source="adoptionCountry" data-field="value_pct" data-where="economy=美国">—</div>
         <p class="ai-kpi-note">较上季度 <span class="ai-up" data-draw="kpiUSDelta">—</span></p>
+        <p class="ai-kpi-src">来源：<a data-draw="srcMS" target="_blank" rel="noopener">微软 AI 扩散报告 2026 Q2 ↗</a></p>
       </div>
       <div class="ai-kpi">
         <p class="ai-kpi-label">中国</p>
         <div class="ai-kpi-value" data-draw="kpiCN" data-source="adoptionCountry" data-field="value_pct" data-where="economy=中国">—</div>
         <p class="ai-kpi-note">较上季度 <span class="ai-up" data-draw="kpiCNDelta">—</span>（微软）。</p>
         <p class="ai-kpi-note ai-kpi-alt">CNNIC 官方统计：普及率 <b data-draw="kpiCNNIC" data-source="adoption" data-field="value_pct" data-where="source=CNNIC">—</b>，用户超 7 亿（2026 年上半年；发布稿未注明普及率的分母）。两者差距来自口径：微软只算 15–64 岁人口，且尚未覆盖部分中国本土 AI 产品。</p>
+        <p class="ai-kpi-src">来源：<a data-draw="srcMS" target="_blank" rel="noopener">微软报告 ↗</a> · CNNIC 报告原文尚未公开，转引自 <a data-draw="srcCNNIC" target="_blank" rel="noopener">科技日报 ↗</a></p>
       </div>
     </div>
     <div class="ai-card">
@@ -104,7 +123,7 @@
         <table data-source="adoption" data-row-key="source">
           <thead><tr>
             <th data-field="source">来源</th><th data-field="scope">范围</th><th data-field="population">统计对象</th>
-            <th class="num" data-field="value_pct">比例</th><th data-field="period">时间</th><th data-field="method">方法</th>
+            <th class="num" data-field="value_pct">比例</th><th data-field="period">时间</th><th data-field="method">方法</th><th data-field="ref">出处（原始 / 转引）</th>
           </tr></thead>
           <tbody data-draw="adoptionTable"></tbody>
         </table>
@@ -121,7 +140,7 @@
         <p class="ai-sub">OECD 2025 年数据：过去三个月用过生成式 AI 的个人比例。与左侧微软数据口径不同，不可混排；OECD 整体水平见上方口径表。</p>
         <div class="ai-tbl">
           <table data-source="adoptionCountry" data-row-key="economy,source">
-            <thead><tr><th data-field="economy">经济体</th><th class="num" data-field="value_pct">个人使用率</th><th data-field="period">时间</th><th data-field="source">出处</th></tr></thead>
+            <thead><tr><th data-field="economy">经济体</th><th class="num" data-field="value_pct">个人使用率</th><th data-field="period">时间</th><th data-field="source">出处（原始 / 转引）</th></tr></thead>
             <tbody data-draw="oecdTable"></tbody>
           </table>
         </div>
@@ -142,17 +161,26 @@
         <h3>增长轨迹：ChatGPT 与 Gemini</h3>
         <p class="ai-sub">两家公司历次公布的数字。注意 ChatGPT 是周活、Gemini 是月活，口径不同。</p>
         <div class="ai-chart" data-draw="growthChart" data-source="growth">—</div>
+        <details class="ai-more">
+          <summary>查看每个数据点的出处</summary>
+          <div class="ai-tbl">
+            <table data-source="growth" data-row-key="series,date">
+              <thead><tr><th data-field="series">系列</th><th data-field="date">时间</th><th class="num" data-field="users_m">用户数</th><th data-field="source">出处（原始 / 转引）</th></tr></thead>
+              <tbody data-draw="growthTable"></tbody>
+            </table>
+          </div>
+        </details>
       </div>
     </div>
     <div class="ai-card">
       <h3>用户数明细与出处</h3>
-      <p class="ai-sub">Meta AI 的数字较旧，Meta 此后未再公布新数；Claude 只有第三方对移动端的估算，Anthropic 未公布消费端用户数。</p>
+      <p class="ai-sub">Meta AI 最近一次公布用户数是 2025 年 10 月的财报电话会；Claude 只有第三方对移动端的估算，Anthropic 未公布消费端用户数。出处一栏优先链接原始来源，原文未公开的标注“转引”。</p>
       <div class="ai-tbl">
         <table data-source="users" data-row-key="product">
           <thead><tr>
             <th data-field="product">产品</th><th data-field="company">公司</th><th data-field="region">地区</th>
             <th data-field="metric">口径</th><th class="num" data-field="users_m">用户数</th><th data-field="as_of">时间</th>
-            <th data-field="basis">来源类型</th><th data-field="source">出处</th>
+            <th data-field="basis">来源类型</th><th data-field="source">出处（原始 / 转引）</th>
           </tr></thead>
           <tbody data-draw="usersTable"></tbody>
         </table>
@@ -176,7 +204,7 @@
           <thead><tr>
             <th data-field="company">公司</th><th data-field="country">国家</th><th data-field="round">轮次</th>
             <th class="num" data-field="amount_busd">本轮金额</th><th class="num" data-field="valuation_busd">融资后估值</th>
-            <th data-field="date">时间</th><th data-field="basis">来源类型</th><th data-field="source">出处</th>
+            <th data-field="date">时间</th><th data-field="basis">来源类型</th><th data-field="source">出处（原始 / 转引）</th>
           </tr></thead>
           <tbody data-draw="fundTable"></tbody>
         </table>
@@ -189,7 +217,7 @@
     <div class="ai-grid">
       <div class="ai-card">
         <h3>四大科技公司季度资本开支</h3>
-        <p class="ai-sub">单位为美元，来自各公司财报。资本开支主要用于数据中心、服务器和芯片，是衡量算力投入最可靠的公开指标。微软口径含融资租赁，与其他三家不完全可比。</p>
+        <p class="ai-sub">单位为美元，来自各公司财报。资本开支主要用于数据中心、服务器和芯片，是衡量算力投入最可靠的公开指标。前三家为现金口径；Meta 按自身口径含融资租赁本金支付，与其他三家不完全可比。微软若含融资租赁为 452 亿美元。</p>
         <div class="ai-chart" data-draw="capexChart" data-source="capex">—</div>
       </div>
       <div class="ai-card">
@@ -205,7 +233,7 @@
         <table data-source="capex" data-row-key="company">
           <thead><tr>
             <th data-field="company">公司</th><th data-field="quarter">季度</th><th class="num" data-field="capex_busd">资本开支</th>
-            <th data-field="outlook">全年指引</th><th data-field="scope">统计口径</th><th data-field="date">财报日期</th><th data-field="source">出处</th>
+            <th data-field="outlook">全年指引</th><th data-field="scope">统计口径</th><th data-field="date">财报日期</th><th data-field="source">出处（原始 / 转引）</th>
           </tr></thead>
           <tbody data-draw="capexTable"></tbody>
         </table>
@@ -218,7 +246,7 @@
         <table data-source="compute" data-row-key="model">
           <thead><tr>
             <th data-field="model">模型</th><th data-field="developer">开发者</th><th data-field="date">发布时间</th>
-            <th class="num" data-field="flop">训练算力（FLOP）</th><th data-field="confidence">可信度</th><th data-field="source">出处</th>
+            <th class="num" data-field="flop">训练算力（FLOP）</th><th data-field="confidence">可信度</th><th data-field="source">出处（原始 / 转引）</th>
           </tr></thead>
           <tbody data-draw="flopTable"></tbody>
         </table>
@@ -240,7 +268,7 @@
         <table data-source="marketcap" data-row-key="company">
           <thead><tr>
             <th data-field="company">公司</th><th data-field="ticker">代码</th><th data-field="role">产业链位置</th>
-            <th class="num" data-field="cap_busd">市值</th><th data-field="as_of">日期</th><th data-field="source">出处</th>
+            <th class="num" data-field="cap_busd">市值</th><th data-field="as_of">日期</th><th data-field="source">出处（原始 / 转引）</th>
           </tr></thead>
           <tbody data-draw="capTable"></tbody>
         </table>
@@ -261,6 +289,14 @@
         <li>“普及率”没有统一标准：微软按产品遥测估算全球 15–64 岁人口，OECD、Eurostat 和中国 CNNIC 是官方统计，Ipsos 是受访者自报，数字高低差异主要来自口径。中国的数字最能说明问题：CNNIC 统计超过 50%，微软估算只有 17.5%。</li>
         <li>各板块更新频率不同，以各表标注的日期为准，发现有误欢迎指正。</li>
       </ul>
+    </div>
+  </section>
+
+  <section class="ai-sec" id="refs">
+    <h2>参考资料</h2>
+    <p class="ai-lede">本页全部数据的原始来源，按板块列出。原文未公开、只能引用媒体报道的，单独列在每组末尾。</p>
+    <div class="ai-card">
+      <div class="ai-refs" data-draw="refList" data-source="adoption adoptionCountry users growth funding capex compute marketcap">—</div>
     </div>
   </section>
 
@@ -432,6 +468,21 @@ dash.draw('fundChart', function(el){
     .on('pointerleave', function(){ tip.hide(); });
 });
 
+function aiLink(text, url){
+  var a = document.createElement('a'); a.textContent = text;
+  if (/^https:\/\//.test(url || '')) { a.href = url; a.target = '_blank'; a.rel = 'noopener'; }
+  return a;
+}
+function aiSrcCell(td, r, label){
+  var main = document.createElement('span'); main.className = 'ai-src';
+  if (/^https:\/\//.test(r.url || '')) main.append(aiLink((label || r.source) + ' ↗', r.url));
+  else { main.className = 'ai-src ai-src-none'; main.textContent = label ? '原文未公开' : r.source; }
+  td.append(main);
+  if (/^https:\/\//.test(r.ref_url || '')) {
+    var ref = document.createElement('span'); ref.className = 'ai-src-ref';
+    ref.append('转引：', aiLink(r.ref, r.ref_url)); td.append(ref);
+  }
+}
 function aiTable(tbody, d, cols){
   if (d.status !== 'ok') { tbody.replaceChildren(); return; }
   tbody.replaceChildren.apply(tbody, d.data.map(function(r){
@@ -439,7 +490,7 @@ function aiTable(tbody, d, cols){
     cols.forEach(function(c){
       var td = document.createElement('td');
       if (c.num) td.className = 'num';
-      if (c.link) { var a = document.createElement('a'); a.textContent = r[c.f]; if (/^https:\/\//.test(r.url || '')) { a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; } td.append(a); }
+      if (c.link) { aiSrcCell(td, r); }
       else if (c.tag) { var s = document.createElement('span'); s.className = 'ai-tag'; s.textContent = r[c.f]; td.append(s); }
       else td.textContent = c.fmt ? c.fmt(r[c.f]) : r[c.f];
       tr.append(td);
@@ -519,6 +570,61 @@ dash.draw('flopChart', function(el){
 
 function aiPct(v){ return d3.format('.1f')(+v) + '%'; }
 function aiRow(id, economy){ var d = dash.data(id); return d.status === 'ok' ? d.data.find(function(r){ return r.economy === economy && r.source === '微软'; }) : null; }
+dash.draw('srcMS', function(a){ var d = dash.data('adoption'); var r = d.status === 'ok' ? d.data.find(function(x){ return /微软/.test(x.source); }) : null; if (r && /^https:\/\//.test(r.url)) a.href = r.url; });
+dash.draw('srcCNNIC', function(a){ var d = dash.data('adoption'); var r = d.status === 'ok' ? d.data.find(function(x){ return x.source === 'CNNIC'; }) : null;
+  if (r && /^https:\/\//.test(r.url)) { a.href = r.url; a.textContent = 'CNNIC 报告 ↗'; } else if (r && /^https:\/\//.test(r.ref_url)) a.href = r.ref_url; });
+dash.draw('growthTable', function(tb){
+  var d = dash.data('growth');
+  if (d.status === 'ok') d = Object.assign({}, d, {data: d.data.slice().sort(function(a, b){ return a.series === b.series ? (a.date < b.date ? -1 : 1) : (a.series < b.series ? -1 : 1); })});
+  aiTable(tb, d, [{f:'series'},{f:'date'},{f:'users_m',num:1,fmt:aiUsers},{f:'source',link:1}]);
+});
+dash.draw('refList', function(el){
+  var groups = [
+    ['全球 AI 应用普及率', ['adoption', 'adoptionCountry']],
+    ['用户规模', ['users', 'growth']],
+    ['融资与估值', ['funding']],
+    ['资本开支', ['capex']],
+    ['训练算力', ['compute']],
+    ['上市公司市值', ['marketcap']]
+  ];
+  var ready = groups.every(function(g){ return g[1].every(function(id){ var s = dash.data(id).status; return s === 'ok' || s === 'error'; }); });
+  if (!ready) { el.replaceChildren('—'); return; }
+  var host = function(u){ try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+  el.replaceChildren.apply(el, groups.map(function(g){
+    var box = document.createElement('div');
+    var h = document.createElement('h3'); h.textContent = g[0]; box.append(h);
+    var prim = [], seen = {}, refs = [], seenR = {};
+    g[1].forEach(function(id){
+      var d = dash.data(id); if (d.status !== 'ok') return;
+      d.data.forEach(function(r){
+        var name = r.source === '微软' ? '微软 AI 扩散报告 2026 Q2' : r.source === 'OECD' ? 'OECD Digital Economy and Society Outlook 2026' : r.source;
+        var item = r.series ? r.series + ' ' + r.date : (r.product || r.model || r.company || '');
+        if (/^https:\/\//.test(r.url || '')) {
+          if (!seen[r.url]) { seen[r.url] = prim.length + 1; prim.push([name, r.url, [item]]); }
+          else if (item && prim[seen[r.url] - 1][2].indexOf(item) < 0) prim[seen[r.url] - 1][2].push(item);
+        }
+        else if (/^https:\/\//.test(r.ref_url || '') && !seenR[r.ref_url]) { seenR[r.ref_url] = 1; refs.push([item || (r.source === 'CNNIC' ? 'CNNIC 普及率' : r.source), r.ref, r.ref_url]); }
+      });
+    });
+    var ol = document.createElement('ol');
+    var dup = {}; prim.forEach(function(p){ dup[p[0]] = (dup[p[0]] || 0) + 1; });
+    prim.forEach(function(p){
+      var li = document.createElement('li');
+      var items = p[2].filter(Boolean);
+      var label = dup[p[0]] > 1 && items.length ? p[0] + '：' + items.join('、') : p[0];
+      li.append(aiLink(label, p[1]));
+      var s = document.createElement('span'); s.className = 'dom'; s.textContent = ' — ' + host(p[1]); li.append(s); ol.append(li);
+    });
+    box.append(ol);
+    if (refs.length) {
+      var t = document.createElement('p'); t.className = 'sec'; t.textContent = '原文未公开，转引自：'; box.append(t);
+      var ol2 = document.createElement('ol'); ol2.start = prim.length + 1;
+      refs.forEach(function(p){ var li = document.createElement('li'); li.append(p[0] + '：', aiLink(p[1], p[2])); var s = document.createElement('span'); s.className = 'dom'; s.textContent = ' — ' + host(p[2]); li.append(s); ol2.append(li); });
+      box.append(ol2);
+    }
+    return box;
+  }));
+});
 dash.draw('kpiCNNIC', function(el){ var d = dash.data('adoption'); var r = d.status === 'ok' ? d.data.find(function(x){ return x.source === 'CNNIC'; }) : null;
   el.textContent = r ? (r.qualifier ? r.qualifier + ' ' : '') + d3.format('.1~f')(+r.value_pct) + '%' : '—'; });
 [['kpiGlobal','全球'],['kpiUS','美国'],['kpiCN','中国']].forEach(function(k){
@@ -565,12 +671,12 @@ dash.draw('adoptionTable', function(tb){
   if (d.status !== 'ok') { tb.replaceChildren(); return; }
   tb.replaceChildren.apply(tb, d.data.map(function(r){
     var tr = document.createElement('tr');
-    var a = document.createElement('a'); a.textContent = r.source; if (/^https:\/\//.test(r.url || '')) { a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; }
-    var c0 = document.createElement('td'); c0.append(a); tr.append(c0);
+    var c0 = document.createElement('td'); c0.textContent = r.source; tr.append(c0);
     [r.scope, r.population].forEach(function(t){ var td = document.createElement('td'); td.textContent = t; tr.append(td); });
     var n = document.createElement('td'); n.className = 'num'; n.textContent = (r.qualifier ? r.qualifier + ' ' : '') + d3.format('.1~f')(+r.value_pct) + '%'; tr.append(n);
     var t1 = document.createElement('td'); t1.textContent = r.period; tr.append(t1);
     var t2 = document.createElement('td'); var s = document.createElement('span'); s.className = 'ai-tag'; s.textContent = r.method; t2.append(s); tr.append(t2);
+    var t3 = document.createElement('td'); aiSrcCell(t3, r, '报告原文'); tr.append(t3);
     return tr;
   }));
 });
